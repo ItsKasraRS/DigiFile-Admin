@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,24 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'FrontEnd-Admin';
+  constructor(private router: Router, private activatedRoute:    ActivatedRoute, private titleService: Title) {
+    router.events.subscribe(event => {
+      if(event instanceof NavigationEnd) {
+        var title = this.getTitle(router.routerState, router.routerState.root).join('-');
+        titleService.setTitle(title);
+      }
+    });
+  }
+
+  getTitle(state, parent) {
+    var data = [];
+    if(parent && parent.snapshot.data && parent.snapshot.data.title) {
+      data.push('Digifile - '+parent.snapshot.data.title);
+    }
+
+    if(state && parent) {
+      data.push(... this.getTitle(state, state.firstChild(parent)));
+    }
+    return data;
+  }
 }
