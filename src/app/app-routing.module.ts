@@ -1,3 +1,4 @@
+import { LoginComponent } from './Pages/login/login.component';
 import { TestComponent } from './Pages/test/test.component';
 import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
@@ -16,8 +17,8 @@ const routes: Routes = [
   {
     path: '',
     component: NoLayoutComponent,
-    children: [
-      { path: 'test', component: TestComponent, data: { title: 'Test' } }
+    children: [  
+      { path: 'login', component: LoginComponent, data: { title: 'Log in' }}
     ]
   },
 ];

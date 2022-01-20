@@ -1,0 +1,131 @@
+<!-- <div class="main-wrapper">
+  <div class="page-wrapper full-page">
+    <div class="page-content d-flex align-items-center justify-content-center">
+
+      <div class="row w-100 mx-0 auth-page">
+        <div class="col-md-8 col-xl-6 mx-auto">
+          <div class="card">
+            <div class="row">
+              <div class="col-md-4 pr-md-0">
+                <div class="auth-left-wrapper" style="background-image: url('/assets/images/RandomImage.jpg');">
+
+                </div>
+              </div>
+              <div class="col-md-8 pl-md-0">
+                <div class="auth-form-wrapper px-4 py-5">
+                  <a href="https://DigiFile.com" class="noble-ui-logo d-block mb-2"><img src="/assets/images/Brand.png"
+                      style="width: 50px;"></a>
+                  <h5 class="text-muted font-weight-normal mb-4">Welcome back! Log in to your account.</h5>
+                  <form class="forms-sample" [formGroup]="cred" (ngSubmit)="login()">
+                    <mat-form-field appearance="outline" class="w-100" style="margin-bottom: 20px;">
+                      <mat-label>Email</mat-label>
+                      <input type="email" matInput formControlName="email">
+                      <mat-error *ngIf="cred.controls.email.errors?.required && cred.controls.email.touched">please
+                        enter email</mat-error>
+                      <mat-error *ngIf="cred.controls.email.errors?.maxlength && cred.controls.email.touched">email
+                        can't be more than 200 characters</mat-error>
+                      <mat-error *ngIf="cred.controls.email.errors?.email && cred.controls.email.touched">email isn't
+                        valid</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100" style="margin-bottom: 20px;">
+                      <mat-label>Password</mat-label>
+                      <input type="password" matInput formControlName="password">
+                      <mat-error *ngIf="cred.controls.password.errors?.required && cred.controls.password.touched">
+                        please enter password</mat-error>
+                      <mat-error *ngIf="cred.controls.password.errors?.maxlength && cred.controls.password.touched">
+                        password can't be more than 200 characters</mat-error>
+                      <mat-error *ngIf="cred.controls.password.errors?.minlength && cred.controls.password.touched">
+                        password must be more than 8 characters</mat-error>
+                    </mat-form-field>
+                    <div class="form-check form-check-flat form-check-primary">
+                      <mat-checkbox style="margin-bottom: 20px;" color="primary" formControlName="isRemember">Remember
+                        me</mat-checkbox>
+                    </div>
+                    <div class="mt-3">
+                      <button type="submit" class="btn btn-primary mr-2 mb-2 mb-md-0 text-white"
+                        [disabled]="!cred.valid">Login</button>
+                      <a href="http://DigiFile.com" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
+                        <i class="btn-icon-prepend" style="vertical-align: -2px;" data-feather="home"></i>
+                        Return to home
+                      </a>
+                      <a routerLink="/" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
+                        <i class="btn-icon-prepend" style="vertical-align: -2px;" data-feather="home"></i>
+                        Panel
+                      </a>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div> -->
+
+<div class="app">
+  <div class="container-fluid p-h-0 p-v-20 bg full-height d-flex"
+    style="background-image: url('assets/images/others/login-3.png')">
+    <div class="d-flex flex-column justify-content-between w-100">
+      <div class="container d-flex h-100">
+        <div class="row align-items-center w-100">
+          <div class="col-md-7 col-lg-5 m-h-auto">
+            <div class="card shadow-lg">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between m-b-30">
+                  <img class="img-fluid" alt="" src="assets/images/logo/logo.png">
+                  <h2 class="m-b-0">Sign In</h2>
+                </div>
+                <form [formGroup]="cred" (ngSubmit)="login()">
+                  <mat-form-field appearance="outline" class="w-100" style="margin-bottom: 20px;">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput formControlName="email">
+                    <mat-error *ngIf="cred.controls.email.errors?.required && cred.controls.email.touched">please
+                      enter email</mat-error>
+                    <mat-error *ngIf="cred.controls.email.errors?.maxlength && cred.controls.email.touched">email
+                      can't be more than 200 characters</mat-error>
+                    <mat-error *ngIf="cred.controls.email.errors?.email && cred.controls.email.touched">email isn't
+                      valid</mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="w-100" style="margin-bottom: 20px;">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput formControlName="password">
+                    <mat-error *ngIf="cred.controls.password.errors?.required && cred.controls.password.touched">
+                      please enter password</mat-error>
+                    <mat-error *ngIf="cred.controls.password.errors?.maxlength && cred.controls.password.touched">
+                      password can't be more than 200 characters</mat-error>
+                    <mat-error *ngIf="cred.controls.password.errors?.minlength && cred.controls.password.touched">
+                      password must be more than 8 characters</mat-error>
+                  </mat-form-field>
+
+                  <div class="form-check form-check-flat form-check-primary">
+                    <mat-checkbox style="margin-bottom: 20px;" color="primary" formControlName="isRemember">Remember
+                      me</mat-checkbox>
+                  </div>
+                  <div class="form-group">
+                    <div class="d-flex align-items-center justify-content-between">
+                      <button class="btn btn-primary">Sign In</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-none d-md-flex p-h-40 justify-content-between">
+        <span class="">© 2022 Digi file</span>
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <a class="text-dark text-link" href="">Legal</a>
+          </li>
+          <li class="list-inline-item">
+            <a class="text-dark text-link" href="">Privacy</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

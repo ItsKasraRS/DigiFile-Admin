@@ -1,0 +1,190 @@
+/* based on angular-toastr css https://github.com/Foxandxss/angular-toastr/blob/cb508fe6801d6b288d3afc525bb40fee1b101650/dist/angular-toastr.css */
+
+/* position */
+.toast-center-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .toast-top-center {
+    top: 0;
+    right: 0;
+    width: 100%;
+  }
+  .toast-bottom-center {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+  }
+  .toast-top-full-width {
+    top: 0;
+    right: 0;
+    width: 100%;
+  }
+  .toast-bottom-full-width {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+  }
+  .toast-top-left {
+    top: 12px;
+    left: 12px;
+  }
+  .toast-top-right {
+    top: 12px;
+    right: 12px;
+  }
+  .toast-bottom-right {
+    right: 12px;
+    bottom: 12px;
+  }
+  .toast-bottom-left {
+    bottom: 12px;
+    left: 12px;
+  }
+  
+  /* toast styles */
+  .toast-title {
+    font-weight: bold;
+  }
+  .toast-message {
+    word-wrap: break-word;
+  }
+  .toast-message a,
+  .toast-message label {
+    color: #FFFFFF;
+  }
+  .toast-message a:hover {
+    color: #CCCCCC;
+    text-decoration: none;
+  }
+  .toast-close-button {
+    position: relative;
+    right: -0.3em;
+    top: -0.3em;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-shadow: 0 1px 0 #ffffff;
+    /* opacity: 0.8; */
+  }
+  .toast-close-button:hover,
+  .toast-close-button:focus {
+    color: #000000;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.4;
+  }
+  /*Additional properties for button version
+   iOS requires the button element instead of an anchor tag.
+   If you want the anchor version, it requires `href="#"`.*/
+  button.toast-close-button {
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+  }
+  .toast-container {
+    pointer-events: none;
+    position: fixed;
+    z-index: 999999;
+  }
+  .toast-container * {
+    box-sizing: border-box;
+  }
+  .toast-container .ngx-toastr {
+    position: relative;
+    overflow: hidden;
+    margin: 0 0 6px;
+    padding: 15px 15px 15px 50px;
+    width: 300px;
+    border-radius: 3px 3px 3px 3px;
+    background-position: 15px center;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    color: #FFFFFF;
+  }
+  .toast-container .ngx-toastr:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+  /* https://github.com/FortAwesome/Font-Awesome-Pro/blob/master/advanced-options/raw-svg/regular/info-circle.svg */
+  .toast-info {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 45.999 45.999'%3E %3Cpath fill='%23fff' d='M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 11-6 0V21a3 3 0 116 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z'/%3E %3C/svg%3E");
+  }
+  /* https://github.com/FortAwesome/Font-Awesome-Pro/blob/master/advanced-options/raw-svg/regular/times-circle.svg */
+  .toast-error {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 51.976 51.976'%3E %3Cpath fill='%23fff' d='M44.373 7.603c-10.137-10.137-26.632-10.138-36.77 0-10.138 10.138-10.137 26.632 0 36.77s26.632 10.138 36.77 0c10.137-10.138 10.137-26.633 0-36.77zm-8.132 28.638a2 2 0 01-2.828 0l-7.425-7.425-7.778 7.778a2 2 0 11-2.828-2.828l7.778-7.778-7.425-7.425a2 2 0 112.828-2.828l7.425 7.425 7.071-7.071a2 2 0 112.828 2.828l-7.071 7.071 7.425 7.425a2 2 0 010 2.828z'/%3E %3C/svg%3E");
+  }
+  /* https://github.com/FortAwesome/Font-Awesome-Pro/blob/master/advanced-options/raw-svg/regular/check.svg */
+  .toast-success {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 52'%3E %3Cpath fill='%23fff' d='M26 0C11.664 0 0 11.663 0 26s11.664 26 26 26 26-11.663 26-26S40.336 0 26 0zm14.495 17.329l-16 18a1.997 1.997 0 01-2.745.233l-10-8a2 2 0 012.499-3.124l8.517 6.813L37.505 14.67a2.001 2.001 0 012.99 2.659z'/%3E %3C/svg%3E");
+  }
+  /* https://github.com/FortAwesome/Font-Awesome-Pro/blob/master/advanced-options/raw-svg/regular/exclamation-triangle.svg */
+  .toast-warning {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 52 52' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath fill='%23fff' d='M49.466 41.26L29.216 6.85c-.69-1.16-1.89-1.85-3.22-1.85-1.32 0-2.53.69-3.21 1.85L2.536 41.26c-.71 1.2-.72 2.64-.03 3.85.68 1.18 1.89 1.89 3.24 1.89h40.51c1.35 0 2.56-.71 3.23-1.89.7-1.21.69-2.65-.02-3.85zm-25.53-21.405h3.381v3.187l-.724 8.92H24.66l-.725-8.92v-3.187zm2.97 17.344a1.712 1.712 0 01-1.267.543c-.491 0-.914-.181-1.268-.543a1.788 1.788 0 01-.531-1.297c0-.502.176-.935.53-1.297a1.712 1.712 0 011.269-.544c.49 0 .914.181 1.268.544s.53.795.53 1.297c0 .503-.176.934-.53 1.297z'/%3E %3C/svg%3E");
+  }
+  .toast-container.toast-top-center .ngx-toastr,
+  .toast-container.toast-bottom-center .ngx-toastr {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .toast-container.toast-top-full-width .ngx-toastr,
+  .toast-container.toast-bottom-full-width .ngx-toastr {
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .ngx-toastr {
+    background-color: #030303;
+    pointer-events: auto;
+  }
+  .toast-success {
+    background-color: #15da7e;
+  }
+  .toast-error {
+    background-color: #f7471c;
+  }
+  .toast-info {
+    background-color: #1c85d5;
+  }
+  .toast-warning {
+    background-color: #febc22;
+  }
+  .toast-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 4px;
+    background-color: #000000;
+    opacity: 0.4;
+  }
+  /* Responsive Design */
+  @media all and (max-width: 240px) {
+    .toast-container .ngx-toastr.div {
+      padding: 8px 8px 8px 50px;
+      width: 11em;
+    }
+    .toast-container .toast-close-button {
+      right: -0.2em;
+      top: -0.2em;
+    }
+  }
+  @media all and (min-width: 241px) and (max-width: 480px) {
+    .toast-container .ngx-toastr.div {
+      padding: 8px 8px 8px 50px;
+      width: 18em;
+    }
+    .toast-container .toast-close-button {
+      right: -0.2em;
+      top: -0.2em;
+    }
+  }
+  @media all and (min-width: 481px) and (max-width: 768px) {
+    .toast-container .ngx-toastr.div {
+      padding: 15px 15px 15px 50px;
+      width: 25em;
+    }
+  }
