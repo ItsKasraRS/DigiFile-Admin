@@ -1,0 +1,84 @@
+<div class="main-content">
+
+    <form [formGroup]="userForm" (ngSubmit)="addUser()">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>User info</h5>
+                            <mat-form-field appearance="outline" class="w-100" style="margin-bottom: 20px;">
+                                <mat-label>Username</mat-label>
+                                <input type="text" matInput formControlName="username">
+                                <mat-error *ngIf="userForm.controls.username.errors?.required && userForm.controls.username.touched">please enter username</mat-error>
+                                <mat-error *ngIf="userForm.controls.username.errors?.maxlength && userForm.controls.username.touched">username can't be more than 200 characters</mat-error>
+                                <mat-error *ngIf="userForm.controls.username.errors?.minlength && userForm.controls.username.touched">username must be more than 5 characters</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-100" style="margin-bottom: 10px;">
+                                <mat-label>Phone number</mat-label>
+                                <input type="text" matInput formControlName="mobile">
+                                <mat-error *ngIf="userForm.controls.mobile.errors?.required && userForm.controls.mobile.touched">please enter phone number</mat-error>
+                                <mat-error *ngIf="userForm.controls.mobile.errors?.maxlength && userForm.controls.mobile.touched">phone number can't be more than 16 characters</mat-error>
+                                <mat-error *ngIf="userForm.controls.mobile.errors?.minlength && userForm.controls.mobile.touched">phone number must be more than 5 characters</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-100" style="margin-bottom: 10px;">
+                                <mat-label>Email</mat-label>
+                                <input type="email" matInput formControlName="email">
+                                <mat-error *ngIf="userForm.controls.email.errors?.required && userForm.controls.email.touched">please enter email</mat-error>
+                                <mat-error *ngIf="userForm.controls.email.errors?.maxlength && userForm.controls.email.touched">email can't be more than 200 characters</mat-error>
+                                <mat-error *ngIf="userForm.controls.email.errors?.email && userForm.controls.email.touched">email isn't valid</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-100" style="margin-bottom: 10px;">
+                                <mat-label>Password</mat-label>
+                                <input type="password" matInput formControlName="password">
+                                <mat-error *ngIf="userForm.controls.password.errors?.required && userForm.controls.password.touched">please enter password</mat-error>
+                                <mat-error *ngIf="userForm.controls.password.errors?.maxlength && userForm.controls.password.touched">password can't be more than 200 characters</mat-error>
+                                <mat-error *ngIf="userForm.controls.password.errors?.minlength && userForm.controls.password.touched">password must be more than 8 characters</mat-error>
+                            </mat-form-field>
+                            <div class="form-check form-check-flat form-check-primary">
+                                <mat-slide-toggle color="primary" formControlName="isActive">User status</mat-slide-toggle>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="form-group">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <button type="submit" class="btn btn-success m-r-5"><i class="anticon anticon-check-circle"></i>
+                                        Add user</button>
+                                    <button class="btn btn-danger m-r-5" routerLink="/user/list"><i
+                                            class="anticon anticon-close-circle"></i> Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card m-b-25">
+                        <div class="card-body">
+                            <h4>Select image</h4>
+                            <div class="m-t-30">
+                                <p class="text-center">
+                                    <img src="./assets/images/avatars/thumb-6.jpg" class="w-50" style="border-radius: 100%;border: solid #3f51b5;padding: 5px;">
+                                </p>
+                                <br>
+                                <br>
+                                    <input type="file" (change)="onFileChange($event)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Select roles</h4>
+                            <div class="m-b-15 m-t-30">
+
+                                <div class="form-check form-check-flat form-check-primary" *ngFor="let item of roles">
+                                    <mat-checkbox style="margin-bottom: 10px;" color="primary" [value]="item.id.toString()" (change)="onRoleChange($event)">{{item.roleName}}</mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

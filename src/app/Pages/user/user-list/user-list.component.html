@@ -1,0 +1,79 @@
+<div class="main-content">
+    <div class="card">
+        <div class="card-body">
+            <h4>Users list</h4>
+
+            <div class="m-t-15">
+                <button routerLink="/user/add" class="btn btn-success m-r-5"><i
+                        class="anticon anticon-plus-circle"></i> Add user</button>
+            </div>
+            <div class="row m-t-15">
+                <div class="col-12 col-sm-6 col-md-4">
+                    <form>
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Search by email...</mat-label>
+                            <input type="text" matInput>
+                        </mat-form-field>
+                    </form>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4">
+
+                </div>
+            </div>
+            <div>
+                <div class="table-responsive">
+                    <table class="table" style="box-shadow: 0 0 10px 0 #ccc;">
+                        <thead>
+                            <tr>
+                                <th class="text-muted" scope="col">#</th>
+                                <th class="text-muted" scope="col">Username</th>
+                                <th class="text-muted" scope="col">Email</th>
+                                <th class="text-muted" scope="col">Phone number</th>
+                                <th class="text-muted" scope="col">Roles & permissions</th>
+                                <th class="text-muted" scope="col">Status</th>
+                                <th class="text-muted" scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of users">
+                                <th scope="row">
+                                    <mat-form-field appearance="legacy" [style.width.px]=100>
+                                        <mat-label>ID</mat-label>
+                                        <input type="text" matInput [value]="item.id">
+                                        <mat-icon matSuffix><i class="anticon anticon-copy text-info"></i></mat-icon>
+                                        
+                                    </mat-form-field>
+                                </th>
+                                <td>{{item.username}}</td>
+                                <td>{{item.email}}</td>
+                                <td>{{item.mobile}}</td>
+                                <td>
+                                    <ul class="CList">
+                                        <li *ngFor="let role of roles | userRoleFilter: item.id">
+                                            <i class="anticon anticon-check-circle"></i> <span>{{role.roleName}}</span>
+                                        </li>
+                                    </ul>
+                                    <div class="Custom-Item info" *ngIf="((roles || []) | userRoleFilter: item.id).length < 1">
+                                        No roles
+                                    </div>
+                                </td>
+                                <td class="">
+                                    <span class="Cstatus success font-weight-semibold" *ngIf="item.isActive">Enable</span>
+                                    <span class="Cstatus danger font-weight-semibold" *ngIf="!item.isActive">Disable</span>
+                                </td>
+                                <td>
+                                    <a routerLink="user/edit" class="text-warning m-r-5 clickable"
+                                        style="font-size: 23px;"  data-toggle="tooltip" data-placement="top" title="Edit user"><i class="anticon anticon-form"></i></a>
+                                    <a routerLink="user/remove" class="text-danger m-r-5 clickable"
+                                        style="font-size: 23px;"  data-toggle="tooltip" data-placement="top" title="Delete user"><i class="anticon anticon-delete"></i></a>
+                                    <!-- <a routerLink="user/remove" class="text-primary m-r-5 clickable"
+                                        style="font-size: 23px;"  data-toggle="tooltip" data-placement="top" title="Change roles"><i class="anticon anticon-audit"></i></a> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
