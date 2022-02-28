@@ -62,10 +62,10 @@
                                     <span class="Cstatus danger font-weight-semibold" *ngIf="!item.isActive">Disable</span>
                                 </td>
                                 <td>
-                                    <a routerLink="user/edit" class="text-warning m-r-5 clickable"
-                                        style="font-size: 23px;"  data-toggle="tooltip" data-placement="top" title="Edit user"><i class="anticon anticon-form"></i></a>
-                                    <a routerLink="user/remove" class="text-danger m-r-5 clickable"
-                                        style="font-size: 23px;"  data-toggle="tooltip" data-placement="top" title="Delete user"><i class="anticon anticon-delete"></i></a>
+                                    <a [routerLink]="['/user/edit/'+item.id]" class="text-warning m-r-5 clickable"
+                                        style="font-size: 23px;" title="Edit user"><i class="anticon anticon-form"></i></a>
+                                    <a (click)="deleteUser(item.id, item)" class="text-danger m-r-5 clickable"
+                                        style="font-size: 23px;" title="Delete user"><i class="anticon anticon-delete"></i></a>
                                     <!-- <a routerLink="user/remove" class="text-primary m-r-5 clickable"
                                         style="font-size: 23px;"  data-toggle="tooltip" data-placement="top" title="Change roles"><i class="anticon anticon-audit"></i></a> -->
                                 </td>

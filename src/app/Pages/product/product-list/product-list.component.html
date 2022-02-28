@@ -1,0 +1,94 @@
+<div class="main-content">
+    <div class="card">
+        <div class="card-body">
+            <h4>Products list</h4>
+
+            <div class="m-t-15">
+                <button routerLink="/product/add" class="btn btn-success m-r-5"><i
+                        class="anticon anticon-plus-circle"></i> Add product</button>
+            </div>
+            <div class="row m-t-15">
+                <div class="col-12 col-sm-6 col-md-4">
+                    <form>
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Search by title...</mat-label>
+                            <input type="text" matInput (input)="searchByTitle($event)" [value]="prodTitle">
+                        </mat-form-field>
+                    </form>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4">
+
+                </div>
+            </div>
+            <div>
+                <div class="table-responsive">
+                    <table class="table" style="box-shadow: 0 0 10px 0 #ccc;">
+                        <thead>
+                            <tr>
+                                <th class="text-muted" scope="col" style="width: 200px;">#</th>
+                                <th class="text-muted" scope="col" style="width: 250px;">Image</th>
+                                <th class="text-muted" scope="col" span="1" style="width: 350px;">Title</th>
+                                <th class="text-muted" scope="col">Release date</th>
+                                <th class="text-muted" scope="col">Price</th>
+                                <th class="text-muted" scope="col">Likes</th>
+                                <th class="text-muted" scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!loaded">
+                                <td colspan="7">
+                                    <div style="margin: 50px auto">
+                                        <mat-spinner style="margin: auto;" [diameter]="50"></mat-spinner>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let item of product">
+                                <th scope="row">
+                                    <mat-form-field appearance="legacy" [style.width.px]=150>
+                                        <mat-label>ID</mat-label>
+                                        <input type="text" matInput [value]="item.id">
+                                        <mat-icon matSuffix><i class="anticon anticon-copy text-info"></i></mat-icon>
+
+                                    </mat-form-field>
+                                </th>
+                                <td><img [src]="getPicture(item.image)" style="width: 200px"></td>
+                                <td>{{item.title}}</td>
+                                <td>{{item.releaseDate | date}}</td>
+                                <td>
+                                    <span class="text-primary font-weight-semibold" *ngIf="item.price > 0">{{item.price | currency}}</span>
+                                    <span class="text-success font-weight-semibold" *ngIf="item.price === 0">Free</span>
+                                </td>
+                                <td class="">{{item.like}} <i class="anticon anticon-heart text-danger m-l-5" style="font-size: 22px;vertical-align: -5px;"></i></td>
+                                <td>
+                                    <a class="text-primary m-r-5 clickable" style="font-size: 23px;"
+                                        title="Product comments"><i class="anticon anticon-message"></i></a>
+                                    <a [routerLink]="['/product/edit/'+item.id]" class="text-warning m-r-5 clickable"
+                                        style="font-size: 23px;" title="Edit product"><i
+                                            class="anticon anticon-form"></i></a>
+                                    <a class="text-danger m-r-5 clickable" style="font-size: 23px;"
+                                        title="Delete product" (click)="deleteProduct(item.id, item)"><i class="anticon anticon-delete"></i></a>
+                                    <!-- <a routerLink="user/remove" class="text-primary m-r-5 clickable"
+                                        style="font-size: 23px;"  data-toggle="tooltip" data-placement="top" title="Change roles"><i class="anticon anticon-audit"></i></a> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <!-- <div class="col-sm-12 col-md-5">
+                        
+                    </div> -->
+                    <div class="col-sm-12 col-md-12">
+                        <div class="dataTables_paginate paging_simple_numbers">
+                            <ul class="pagination">
+                                <li class="paginate_button page-item previous" *ngIf="filters.pageId > 1"><a (click)="setPage(filters.pageId-1)" class="page-link clickable"><i class="anticon anticon-left"></i></a></li>
+                                <li class="paginate_button page-item" *ngFor="let item of pages" [ngClass]="{'active' : filters.pageId === item}"><a (click)="setPage(item)" class="page-link clickable">{{item}}</a></li>
+                                <li class="paginate_button page-item next" *ngIf="filters.pageId < products.pageCount"><a (click)="setPage(filters.pageId+1)" class="page-link clickable"><i class="anticon anticon-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

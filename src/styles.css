@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
+* {
+    outline: none !important;
+}
+
 html, body {
     height: 100%;
 }
@@ -115,4 +119,9 @@ body {
 .Cstatus.danger {
     color: #FF4961;
     border-color: #FF4961;
+}
+
+.Cbtn-success {
+    background-color: #2ce0a1 !important;
+    color: #fff !important;
 }

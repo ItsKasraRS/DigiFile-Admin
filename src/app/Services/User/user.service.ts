@@ -21,4 +21,16 @@ export class UserService {
   getUserRoles(): Observable<any> {
     return this.http.get('admin/user/user-roles');
   }
+  getUserData(id: number): Observable<any> {
+    return this.http.get('admin/user/get-user/'+id);
+  }
+  getUserRoleUpdate(id: number): Observable<any> {
+    return this.http.get('admin/user/update-user-roles/'+id);
+  }
+  updateUser(model: any): Observable<any> {
+    return this.http.post('admin/user/update-user', model);
+  }
+  deleteUser(id: number): Observable<any> {
+    return this.http.post('admin/user/delete/'+id, null);
+  }
 }

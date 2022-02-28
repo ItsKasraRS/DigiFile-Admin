@@ -5,6 +5,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule, PB_DIRECTION, POSITION, SPINNER } from 'ngx-ui-loader';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 
 // Material Components
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -35,6 +37,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserListComponent } from './Pages/user/user-list/user-list.component';
 import { UserService } from './Services/User/user.service';
 import { UserAddComponent } from './Pages/user/user-add/user-add.component';
+import { UserEditComponent } from './Pages/user/user-edit/user-edit.component';
+import { ProductListComponent } from './Pages/product/product-list/product-list.component';
+import { ProductService } from './Services/Product/product.service';
+import { ProductAddComponent } from './Pages/product/product-add/product-add.component';
+import { ProductEditComponent } from './Pages/product/product-edit/product-edit.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   'bgsColor': '#3e7dff',
@@ -80,6 +87,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     UserListComponent,
     UserAddComponent,
     UserRoleFilter,
+    UserEditComponent,
+    ProductListComponent,
+    ProductAddComponent,
+    ProductEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,6 +98,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    CKEditorModule,
     ReactiveFormsModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgxUiLoaderRouterModule,
@@ -107,7 +119,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AdminInterceptor, multi: true },
     AuthService,
-    UserService
+    UserService,
+    ProductService,
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,81 @@
+<div class="main-content">
+
+    <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Product info</h5>
+                            <mat-form-field appearance="outline" class="w-100" style="margin-bottom: 20px;">
+                                <mat-label>Title</mat-label>
+                                <input type="text" matInput formControlName="title">
+                                <mat-error
+                                    *ngIf="productForm.controls.title.errors?.required && productForm.controls.title.touched">
+                                    please enter product title</mat-error>
+                                <mat-error
+                                    *ngIf="productForm.controls.title.errors?.maxlength && productForm.controls.title.touched">
+                                    title can't be more than 200 characters</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-100" style="margin-bottom: 20px;">
+                                <mat-label>Price</mat-label>
+                                <input type="number" matInput formControlName="price" min="0" value="0">
+                            </mat-form-field>
+                            <label class="font-weight-semibold font-size-15">Product description: </label>
+                            <ckeditor [editor]="Editor" data="" formControlName="description"></ckeditor>
+                            <span class="text-danger" *ngIf="productForm.controls.description.errors?.required && productForm.controls.description.touched">Product description is required</span>
+                            <style>
+                                :host ::ng-deep .ck-editor__editable_inline {
+                                    min-height: 200px;
+                                }
+                            </style>
+                            <br>
+                            <br>
+                            <div class="form-group">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <button type="submit" class="btn btn-success m-r-5" [disabled]="!productForm.valid"><i
+                                            class="anticon anticon-check-circle"></i>
+                                        Add product</button>
+                                    <button class="btn btn-danger m-r-5" routerLink="/product/list"><i
+                                            class="anticon anticon-close-circle"></i> Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card m-b-25">
+                        <div class="card-body">
+                            <h4>Select image</h4>
+                            <div class="m-t-30">
+                                <p class="text-center">
+                                    <img src="./assets/images/others/img-10.jpg" class="w-100"
+                                        style="border-radius: 10px;border: solid #3f51b5;padding: 5px;">
+                                </p>
+                                <br>
+                                <br>
+                                <input type="file" (change)="onFileChange($event)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Select categories</h4>
+                            <div class="m-b-15 m-t-30">
+                                <select id="mainCat" class="form-control" (change)="getSubCategories($event)">
+                                    <option *ngFor="let item of categories" [value]="item.categoryId">{{item.title}}</option>
+                                </select>
+                            </div>
+                            <div class="m-b-15 m-t-30">
+                                <select id="mainCat" class="form-control" (change)="getSubCategory($event)">
+                                    <option *ngFor="let item of subCategories" [value]="item.categoryId">{{item.title}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

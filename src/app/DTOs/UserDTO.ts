@@ -12,6 +12,20 @@ export class addUserDTO {
     ) { }
 }
 
+export class editUserDTO {
+    constructor(
+        public userId: number,
+        public username: string,
+        public mobile: string,
+        public email: string,
+        public password: string,
+        public isActive: boolean,
+        public avatarImage: string,
+        public selectedImage: string,
+        public roles: rolesDTO[]
+    ) { }
+}
+
 export class rolesDTO {
     constructor(
         public id: number,

@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { rolesDTO, userRolesDTO } from './../../../DTOs/UserDTO';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/Services/User/user.service';
@@ -10,7 +11,7 @@ import { UserService } from 'src/app/Services/User/user.service';
 export class UserListComponent implements OnInit {
   users: any;
   roles: userRolesDTO[];
-  constructor(private api: UserService) { }
+  constructor(private api: UserService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.api.userList().subscribe(res=> {
@@ -22,9 +23,18 @@ export class UserListComponent implements OnInit {
     this.api.getUserRoles().subscribe(res=> {
       if (res.status === "Success") {
         this.roles = res.data;
-        console.log(this.roles);
       }
     })
   }
-
+  deleteUser(id: number, item)  {
+    this.api.deleteUser(id).subscribe(res=> {
+      if(res.status === "Success") {
+        const index = this.users.indexOf(item);
+        if (index !== -1) {
+          this.users.splice(index, 1);
+      }  
+        this.toastr.success('user has been removed successfully', '');
+      }
+    })
+  }
 }
