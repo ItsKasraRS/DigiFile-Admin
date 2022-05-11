@@ -13,27 +13,30 @@ export class setProductFilters {
     ) {}
 }
 
-export class AddProductData {
+export class AddProductDTO {
     constructor(
         public title: string,
         public description: string,
-        public selectedImage: string,
         public price: number,
         public category: number,
         public subCategory: number,
+        public selectedImage: string,
+        public selectedSourceFile
     ) {}
 }
 
-export class EditProductData {
+export class EditProductDTO {
     constructor(
         public id: number,
         public title: string,
         public description: string,
         public image: string,
+        public sourceFile: string,
         public price: number,
         public category: number,
         public subCategory: number,
         public selectedImage: string,
+        public selectedSourceFile,
         public releaseDate: Date
     ) {}
 }

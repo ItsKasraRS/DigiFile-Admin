@@ -1,7 +1,7 @@
-import { setProductFilters, AddProductData } from './../../DTOs/ProductDTO';
-import { ProductListDTO, EditProductData } from 'src/app/DTOs/ProductDTO';
+import { setProductFilters, AddProductDTO } from './../../DTOs/ProductDTO';
+import { ProductListDTO, EditProductDTO } from 'src/app/DTOs/ProductDTO';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -9,7 +9,8 @@ import { Injectable } from '@angular/core';
 })
 export class ProductService {
   filters: any;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getProducts(filter: setProductFilters): Observable<any> {
     let params;
@@ -27,16 +28,16 @@ export class ProductService {
   }
 
   getSubCategories(categoryId: number): Observable<any> {
-    return this.http.get('product/get-sub-categories/'+categoryId);
+    return this.http.get('product/get-sub-categories/' + categoryId);
   }
-  addProduct(product: AddProductData): Observable<any> {
-    return this.http.post('product/add', product);
+  addProduct(model: FormData): Observable<any> {
+    return this.http.post('product/add', model, {reportProgress: true, observe: 'events'});
   }
   getProductForEdit(id: number): Observable<any> {
     return this.http.get('product/get/' + id);
   }
-  editProduct(product: EditProductData): Observable<any> {
-    return this.http.post('product/edit', product);
+  editProduct(model: FormData): Observable<any> {
+    return this.http.post('product/edit', model, {reportProgress: true, observe: 'events'});
   }
   deleteProduct(id: number): Observable<any> {
     return this.http.get('product/delete/' + id);

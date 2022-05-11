@@ -19,6 +19,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -30,7 +31,7 @@ import { NoLayoutComponent } from './Layout/no-layout/no-layout.component';
 import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 import { TestComponent } from './Pages/test/test.component';
 import { LoginComponent } from './Pages/login/login.component';
-import { UserRoleFilter } from './Utilities/Filters';
+import { SubCategoryFilter, UserRoleFilter } from './Utilities/Filters';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -42,6 +43,10 @@ import { ProductListComponent } from './Pages/product/product-list/product-list.
 import { ProductService } from './Services/Product/product.service';
 import { ProductAddComponent } from './Pages/product/product-add/product-add.component';
 import { ProductEditComponent } from './Pages/product/product-edit/product-edit.component';
+import { CategoryService } from './Services/Category/category.service';
+import { CategoryListComponent } from './Pages/category/category-list/category-list.component';
+import { CategoryAddComponent } from './Pages/category/category-add/category-add.component';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   'bgsColor': '#3e7dff',
@@ -76,6 +81,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 
 @NgModule({
   declarations: [
+    UserRoleFilter,
+    SubCategoryFilter,
     AppComponent,
     SidebarComponent,
     HeaderComponent,
@@ -84,13 +91,17 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     DashboardComponent,
     TestComponent,
     LoginComponent,
+    //user
     UserListComponent,
     UserAddComponent,
-    UserRoleFilter,
     UserEditComponent,
+    //product
     ProductListComponent,
     ProductAddComponent,
     ProductEditComponent,
+    // category
+    CategoryListComponent,
+    CategoryAddComponent
   ],
   imports: [
     BrowserModule,
@@ -101,8 +112,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     CKEditorModule,
     ReactiveFormsModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    NgxUiLoaderRouterModule,
-    NgxUiLoaderHttpModule.forRoot({showForeground: true}),
+    // NgxUiLoaderRouterModule,
+    // NgxUiLoaderHttpModule.forRoot({showForeground: true}),
     MatFormFieldModule,
     MatDialogModule,
     MatInputModule,
@@ -112,15 +123,18 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatSelectModule,
     MatButtonModule,
     MatTableModule,
+    MatProgressBarModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right'
      }),
+    HotToastModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AdminInterceptor, multi: true },
     AuthService,
     UserService,
     ProductService,
+    CategoryService
   ],
   bootstrap: [AppComponent]
 })

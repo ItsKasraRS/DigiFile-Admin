@@ -8,3 +8,10 @@ export class UserRoleFilter implements PipeTransform {
     return items?.filter(it=>it.userId === id);
   }
 }
+
+@Pipe({ name: 'subCategoryFilter', pure: false })
+export class SubCategoryFilter implements PipeTransform {
+  transform(items, id: number | any) {
+    return items?.filter(it=>it.parentId === id);
+  }
+}

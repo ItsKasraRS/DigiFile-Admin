@@ -1,3 +1,4 @@
+import { CategoryListComponent } from './Pages/category/category-list/category-list.component';
 import { ProductEditComponent } from './Pages/product/product-edit/product-edit.component';
 import { LoginComponent } from './Pages/login/login.component';
 import { TestComponent } from './Pages/test/test.component';
@@ -28,6 +29,9 @@ const routes: Routes = [
       { path: 'product/list', component: ProductListComponent, data: { title: 'Product list' } },
       { path: 'product/add', component: ProductAddComponent, data: { title: 'Add product' } },
       { path: 'product/edit/:id', component: ProductEditComponent, data: { title: 'Edit product' } },
+
+      // category //
+      { path: 'category/list', component: CategoryListComponent, data: { title: 'Category list' } }
     ]
   },
   {

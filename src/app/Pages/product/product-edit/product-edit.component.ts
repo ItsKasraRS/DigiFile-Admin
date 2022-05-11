@@ -1,3 +1,5 @@
+import { HotToastService } from '@ngneat/hot-toast';
+import { HttpEventType } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProductService } from 'src/app/Services/Product/product.service';
@@ -5,7 +7,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ProductImagePath } from 'src/app/Utilities/ApiPath';
-import { EditProductData } from 'src/app/DTOs/ProductDTO';
+import { EditProductDTO } from 'src/app/DTOs/ProductDTO';
 
 @Component({
   selector: 'app-product-edit',
@@ -16,21 +18,26 @@ export class ProductEditComponent implements OnInit {
   public Editor = ClassicEditor;
   imagePath = null;
   productForm: FormGroup = null;
-  productData = new EditProductData(0, '', '', '', 0, 0, 0, null, null);
+  productData = new EditProductDTO(0, '', '', '', '', 0, 0, 0, '',null,null);
   categories = null;
   subCategories = null;
   selectedCategory = null;
   selectedSubCategory = null;
   loaded = false;
-  constructor(private api: ProductService, private toastr: ToastrService, private router: Router, private route: ActivatedRoute) {
+  progressStatus = false;
+  counter: number;
+
+  constructor(private api: ProductService, private toastr: ToastrService, private router: Router, private route: ActivatedRoute, private toast: HotToastService) {
     this.productForm = new FormGroup({
       id: new FormControl(null),
       releaseDate: new FormControl(null),
       title: new FormControl(null, [Validators.required, Validators.maxLength(200)]),
       description: new FormControl(null, [Validators.required]),
       price: new FormControl(null),
-      productImage: new FormControl(null),
-      selectedImage: new FormControl(null)
+      image: new FormControl(null),
+      sourceFile: new FormControl(null),
+      selectedImage: new FormControl(null),
+      selectedSourceFile: new FormControl(null)
     })
   }
 
@@ -46,10 +53,12 @@ export class ProductEditComponent implements OnInit {
             title: res.data.title,
             description: res.data.description,
             price: res.data.price,
-            productImage: res.data.image,
             id: res.data.id,
             releaseDate: res.data.releaseDate,
-            selectedImage: null
+            selectedImage: null,
+            selectedSourceFile: null,
+            image: res.data.image, 
+            sourceFile: res.data.sourceFile, 
           });
 
           this.api.getCategories().subscribe(res => {
@@ -82,6 +91,20 @@ export class ProductEditComponent implements OnInit {
       };
     }
   }
+
+  onSourceChange(event) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length) {
+      const file = <File>event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.productForm.patchValue({
+          selectedSourceFile: event.target.files[0]
+        });
+      };
+    }
+  }
+
   getSubCategories(event) {
     this.api.getSubCategories(event.target.value).subscribe(res => {
       this.selectedCategory = event.target.value;
@@ -94,14 +117,36 @@ export class ProductEditComponent implements OnInit {
 
   editProduct() {
     if (this.productForm.valid) {
-      const product = new EditProductData(this.productForm.controls.id.value, this.productForm.controls.title.value, this.productForm.controls.description.value, this.productForm.controls.productImage.value, this.productForm.controls.price.value, this.selectedCategory, this.selectedSubCategory, this.productForm.controls.selectedImage.value, this.productForm.controls.releaseDate.value)
-      this.api.editProduct(product).subscribe(res => {
-        if (res.status === "Success") {
-          this.toastr.success('product has been updated successfully!', '');
-          this.router.navigate(['/product/list']);
+      this.progressStatus = true;
+
+      let formData = new FormData();
+      formData.append('id', this.productForm.controls.id.value);
+      formData.append('title', this.productForm.controls.title.value);
+      formData.append('description', this.productForm.controls.description.value);
+      formData.append('price', this.productForm.controls.price.value);
+      formData.append('image', this.productForm.controls.image.value);
+      formData.append('sourceFile', this.productForm.controls.sourceFile.value);
+      formData.append('category', this.selectedCategory);
+      formData.append('subCategory', this.selectedSubCategory);
+      formData.append('releaseDate', this.productForm.controls.releaseDate.value);
+      formData.append('selectedImage', this.productForm.controls.selectedImage.value);
+      formData.append('selectedSourceFile', this.productForm.controls.selectedSourceFile.value);
+      console.log(formData);
+      this.api.editProduct(formData).subscribe(event => {
+        if (event.type === HttpEventType.DownloadProgress) {
+          this.counter = Math.round(100 * event.loaded / event.total)
         }
-        if (res.status === "Error") {
-          this.toastr.error(res.description, 'Error');
+        else if (event.type === HttpEventType.Response) {
+          if (event.body.status === "Error") {
+            this.toast.error(event.body.message);
+            this.progressStatus = false;
+          }
+          if (event.body.status === "Success") {
+            this.toastr.success('product has been updated successfully!', '');
+            setTimeout(() => {
+              this.router.navigate(['/product/list'])
+            }, 1000);
+          }
         }
       })
     }

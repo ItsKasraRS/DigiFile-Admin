@@ -1,0 +1,77 @@
+<div class="main-content">
+    <div class="card">
+        <div class="card-body">
+            <h4>Categories list</h4>
+
+            <div class="m-t-15">
+                <button (click)="openDialog()" class="btn btn-success m-r-5"><i class="anticon anticon-plus-circle"></i>
+                    Add category</button>
+            </div>
+            <div>
+                <div class="table-responsive">
+                    <table class="table" style="box-shadow: 0 0 10px 0 #ccc;">
+                        <thead>
+                            <tr>
+                                <th class="text-muted" scope="col" style="width: 200px;">#</th>
+                                <th class="text-muted" scope="col" span="1" style="width: 350px;">Title</th>
+                                <th class="text-muted" scope="col">Sub categories</th>
+                                <th class="text-muted" scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!loaded">
+                                <td colspan="7">
+                                    <div style="margin: 50px auto">
+                                        <mat-spinner style="margin: auto;" [diameter]="50"></mat-spinner>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let item of categories">
+                                <th scope="row">
+                                    <mat-form-field appearance="legacy" [style.width.px]=150>
+                                        <mat-label>ID</mat-label>
+                                        <input type="text" matInput [value]="item.categoryId">
+                                        <mat-icon matSuffix><i class="anticon anticon-copy text-info"></i></mat-icon>
+
+                                    </mat-form-field>
+                                </th>
+                                <td>{{item.title}}</td>
+                                <td class="">
+                                    <ul class="CList">
+                                        <li *ngFor="let cat of subCategories | subCategoryFilter: item.categoryId">
+                                            <i class="anticon anticon-check-circle"></i> <span>{{cat.title}} <a href="#"
+                                                    class="text-warning m-l-5 clickable"><i
+                                                        class="anticon anticon-form"></i></a> <a
+                                                    (click)="deleteCategory(cat.categoryId, cat)"
+                                                    class="text-danger m-l-5 clickable"><i
+                                                        class="anticon anticon-delete"></i></a> </span>
+                                        </li>
+                                    </ul>
+                                    <div class="">
+                                        <div class="Custom-Item info" style="display: inline-block;"
+                                            *ngIf="((subCategories || []) | subCategoryFilter: item.categoryId).length < 1">
+                                            No sub categories
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a (click)="openDialog(item.categoryId)" class="text-primary m-r-5 clickable"
+                                        style="font-size: 23px;" title="Add sub category"><i
+                                            class="anticon anticon-plus"></i></a>
+                                    <a [routerLink]="['/category/edit/'+item.id]" class="text-warning m-r-5 clickable"
+                                        style="font-size: 23px;" title="Edit category"><i
+                                            class="anticon anticon-form"></i></a>
+                                    <a class="text-danger m-r-5 clickable" style="font-size: 23px;"
+                                        title="Delete category" (click)="deleteCategory(item.categoryId, item)"><i
+                                            class="anticon anticon-delete"></i></a>
+                                    <!-- <a routerLink="user/remove" class="text-primary m-r-5 clickable"
+                                        style="font-size: 23px;"  data-toggle="tooltip" data-placement="top" title="Change roles"><i class="anticon anticon-audit"></i></a> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

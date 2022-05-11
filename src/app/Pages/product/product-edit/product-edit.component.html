@@ -8,7 +8,7 @@
                         <div class="card-body">
                             <h5>Product info</h5>
                             <input type="hidden" formControlName="id">
-                            <input type="hidden" formControlName="productImage">
+                            <input type="hidden" formControlName="image">
                             <input type="hidden" formControlName="releaseDate">
                             <mat-form-field appearance="outline" class="w-100" style="margin-bottom: 20px;">
                                 <mat-label>Title</mat-label>
@@ -61,7 +61,22 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="card m-b-25">
+                        <div class="card-body">
+                            <h4>Select source file</h4>
+                            <div class="m-t-30">
+                                <input type="file" #file (change)="onSourceChange($event)">
+                            </div>
+                            <!--  -->
+                            <div class="m-t-5">
+                                <span class="text-danger" *ngIf="!productForm.controls.description.touched">Product source must be in <b>zip</b> file</span>
+                            </div>
+                            <div class="m-t-20" *ngIf="progressStatus">
+                                <span class="text-center m-b-10" style="display: block;">uploaded {{counter}}%</span>
+                                <mat-progress-bar mode="determinate" [value]="counter"></mat-progress-bar>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card">
                         <div class="card-body" *ngIf="loaded">
                             <h4>Select categories</h4>

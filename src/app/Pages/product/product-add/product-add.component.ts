@@ -4,7 +4,9 @@ import { ProductService } from 'src/app/Services/Product/product.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { AddProductData } from 'src/app/DTOs/ProductDTO';
+import { AddProductDTO } from 'src/app/DTOs/ProductDTO';
+import { HttpEventType, HttpRequest, JsonpClientBackend } from '@angular/common/http';
+import { HotToastService } from '@ngneat/hot-toast';
 
 
 @Component({
@@ -19,12 +21,20 @@ export class ProductAddComponent implements OnInit {
   subCategories = null;
   selectedCategory = null;
   selectedSubCategory = null;
-  constructor(private api: ProductService, private toastr: ToastrService, private router: Router) {
+  sourceFile: File;
+  progressStatus = false;
+  counter: number;
+  catLoaded = false;
+
+  constructor(private api: ProductService, private toastr: ToastrService, private router: Router, private toast: HotToastService) {
     this.productForm = new FormGroup({
       title: new FormControl(null, [Validators.required, Validators.maxLength(200)]),
       description: new FormControl(null, [Validators.required]),
       price: new FormControl(null),
-      productImage: new FormControl(null)
+      productImage: new FormControl(null),
+      selectedImage: new FormControl(null),
+      productFile: new FormControl(null),
+      selectedFile: new FormControl(null),
     })
   }
 
@@ -35,6 +45,7 @@ export class ProductAddComponent implements OnInit {
       this.api.getSubCategories(this.categories[0].categoryId).subscribe(res => {
         this.subCategories = res.data;
         this.selectedSubCategory = this.subCategories[0].categoryId;
+        this.catLoaded = true;
       })
     })
   }
@@ -45,11 +56,27 @@ export class ProductAddComponent implements OnInit {
       reader.readAsDataURL(file);
       reader.onload = () => {
         this.productForm.patchValue({
-          productImage: reader.result
+          selectedImage: reader.result
         });
       };
     }
   }
+
+  onSourceChange(event) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length) {
+      const file = <File>event.target.files[0];
+      this.sourceFile = event.target.files[0];      
+      
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.productForm.patchValue({
+          selectedFile: reader.result
+        });
+      };
+    }
+  }
+
   getSubCategories(event) {
     this.api.getSubCategories(event.target.value).subscribe(res => {
       this.selectedCategory = event.target.value;
@@ -63,14 +90,34 @@ export class ProductAddComponent implements OnInit {
   // Add PRODUCT //
   addProduct() {
     if (this.productForm.valid) {
-      const product = new AddProductData(this.productForm.controls.title.value, this.productForm.controls.description.value, this.productForm.controls.productImage.value, this.productForm.controls.price.value, this.selectedCategory, this.selectedSubCategory);
-      this.api.addProduct(product).subscribe(res => {
-        if (res.status === "Success") {
-          this.toastr.success('product successfully added', '');
-          this.router.navigate(['/product/list']);
+      this.progressStatus = true;
+      const source = this.productForm.controls.productFile;
+      
+      let formData = new FormData();
+      formData.append('title', this.productForm.controls.title.value);
+      formData.append('description', this.productForm.controls.description.value);
+      formData.append('price', this.productForm.controls.price.value);
+      formData.append('category', this.selectedCategory);
+      formData.append('subCategory', this.selectedSubCategory);
+      formData.append('selectedImage', this.productForm.controls.selectedImage.value);
+      formData.append('selectedSourceFile', this.sourceFile);
+
+      this.api.addProduct(formData).subscribe(event => {
+        
+        if (event.type === HttpEventType.DownloadProgress) {
+          this.counter = Math.round(100 * event.loaded / event.total)
         }
-        if (res.status === "Error") {
-          this.toastr.error(res.description, 'Error');
+        else if (event.type === HttpEventType.Response) {
+          if (event.body.status === "Error") {
+            this.toast.error(event.body.message);
+            this.progressStatus = false;
+          }
+          if (event.body.status === "Success") {
+            this.toastr.success('product successfully added', '');
+            setTimeout(() => {
+              this.router.navigate(['/product/list'])
+            }, 1000);
+          }
         }
       })
     }

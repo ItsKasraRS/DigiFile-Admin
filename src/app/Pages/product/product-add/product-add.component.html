@@ -1,6 +1,6 @@
 <div class="main-content">
 
-    <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+    <form [formGroup]="productForm" (ngSubmit)="addProduct()" method="post" enctype="multipart/form-data">
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
@@ -23,7 +23,9 @@
                             </mat-form-field>
                             <label class="font-weight-semibold font-size-15">Product description: </label>
                             <ckeditor [editor]="Editor" data="" formControlName="description"></ckeditor>
-                            <span class="text-danger" *ngIf="productForm.controls.description.errors?.required && productForm.controls.description.touched">Product description is required</span>
+                            <span class="text-danger"
+                                *ngIf="productForm.controls.description.errors?.required && productForm.controls.description.touched">Product
+                                description is required</span>
                             <style>
                                 :host ::ng-deep .ck-editor__editable_inline {
                                     min-height: 200px;
@@ -33,8 +35,8 @@
                             <br>
                             <div class="form-group">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <button type="submit" class="btn btn-success m-r-5" [disabled]="!productForm.valid"><i
-                                            class="anticon anticon-check-circle"></i>
+                                    <button type="submit" class="btn btn-success m-r-5"
+                                        [disabled]="!productForm.valid"><i class="anticon anticon-check-circle"></i>
                                         Add product</button>
                                     <button class="btn btn-danger m-r-5" routerLink="/product/list"><i
                                             class="anticon anticon-close-circle"></i> Cancel</button>
@@ -59,17 +61,38 @@
                         </div>
                     </div>
 
+                    <div class="card m-b-25">
+                        <div class="card-body">
+                            <h4>Select source file</h4>
+                            <div class="m-t-30">
+                                <input type="file" #file (change)="onSourceChange($event)">
+                            </div>
+                            <!--  -->
+                            <div class="m-t-5">
+                                <span class="text-danger" *ngIf="!productForm.controls.description.touched">Product source must be in <b>zip</b> file</span>
+                            </div>
+                            <div class="m-t-20" *ngIf="progressStatus">
+                                <span class="text-center m-b-10" style="display: block;">uploaded {{counter}}%</span>
+                                <mat-progress-bar mode="determinate" [value]="counter"></mat-progress-bar>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card">
                         <div class="card-body">
                             <h4>Select categories</h4>
-                            <div class="m-b-15 m-t-30">
+                            <div class="m-b-15 m-t-30" *ngIf="!catLoaded">
+                                <mat-spinner style="margin: auto;" [diameter]="30"></mat-spinner>
+                            </div>
+                            <div class="m-b-15 m-t-30" *ngIf="catLoaded">
                                 <select id="mainCat" class="form-control" (change)="getSubCategories($event)">
-                                    <option *ngFor="let item of categories" [value]="item.categoryId">{{item.title}}</option>
+                                    <option *ngFor="let item of categories" [value]="item.categoryId">{{item.title}}
+                                    </option>
                                 </select>
                             </div>
-                            <div class="m-b-15 m-t-30">
+                            <div class="m-b-15 m-t-30"  *ngIf="catLoaded">
                                 <select id="mainCat" class="form-control" (change)="getSubCategory($event)">
-                                    <option *ngFor="let item of subCategories" [value]="item.categoryId">{{item.title}}</option>
+                                    <option *ngFor="let item of subCategories" [value]="item.categoryId">{{item.title}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
