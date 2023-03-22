@@ -12,6 +12,8 @@ import { UserAddComponent } from './Pages/user/user-add/user-add.component';
 import { UserEditComponent } from './Pages/user/user-edit/user-edit.component';
 import { ProductListComponent } from './Pages/product/product-list/product-list.component';
 import { ProductAddComponent } from './Pages/product/product-add/product-add.component';
+import { RoleListComponent } from './Pages/role/role-list/role-list.component';
+import { RoleAddComponent } from './Pages/role/role-add/role-add.component';
 
 const routes: Routes = [
   {
@@ -24,6 +26,10 @@ const routes: Routes = [
       { path: 'user/list', component: UserListComponent, data: { title: 'User list' } },
       { path: 'user/add', component: UserAddComponent, data: { title: 'Add user' } },
       { path: 'user/edit/:id', component: UserEditComponent, data: { title: 'Edit user' } },
+
+      // role //
+      { path: 'role/list', component: RoleListComponent, data: { title: 'Role list' } },
+      { path: 'role/add', component: RoleAddComponent, data: { title: 'Add role' } },
 
       // product //
       { path: 'product/list', component: ProductListComponent, data: { title: 'Product list' } },

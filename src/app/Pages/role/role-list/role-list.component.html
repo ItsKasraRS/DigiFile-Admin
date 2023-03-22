@@ -1,0 +1,55 @@
+<div class="main-content">
+    <div class="card">
+        <div class="card-body">
+            <h4>Roles list</h4>
+
+            <div class="m-t-15">
+                <button routerLink="/role/add" class="btn btn-success m-r-5"><i class="anticon anticon-plus-circle"></i>
+                    Add Role</button>
+            </div>
+            <div>
+                <div class="table-responsive">
+                    <table class="table" style="box-shadow: 0 0 10px 0 #ccc;">
+                        <thead>
+                            <tr>
+                                <th class="text-muted" scope="col" style="width: 200px;">#</th>
+                                <th class="text-muted" scope="col" span="1" style="width: 350px;">Title</th>
+                                <th class="text-muted" scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!loaded">
+                                <td colspan="7">
+                                    <div style="margin: 50px auto">
+                                        <mat-spinner style="margin: auto;" [diameter]="50"></mat-spinner>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let item of roles">
+                                <th scope="row">
+                                    <mat-form-field appearance="legacy" [style.width.px]=150>
+                                        <mat-label>ID</mat-label>
+                                        <input type="text" matInput [value]="item.id">
+                                        <mat-icon matSuffix><i class="anticon anticon-copy text-info"></i></mat-icon>
+
+                                    </mat-form-field>
+                                </th>
+                                <td>{{item.roleName}}</td>
+                                <td>
+                                    <a [routerLink]="['/category/edit/'+item.id]" class="text-warning m-r-5 clickable"
+                                        style="font-size: 23px;" title="Edit category"><i
+                                            class="anticon anticon-form"></i></a>
+                                    <a class="text-danger m-r-5 clickable" style="font-size: 23px;"
+                                        title="Delete category" (click)="deleteRole(item.id, item)"><i
+                                            class="anticon anticon-delete"></i></a>
+                                    <!-- <a routerLink="user/remove" class="text-primary m-r-5 clickable"
+                                        style="font-size: 23px;"  data-toggle="tooltip" data-placement="top" title="Change roles"><i class="anticon anticon-audit"></i></a> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

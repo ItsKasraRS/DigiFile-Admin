@@ -15,3 +15,10 @@ export class SubCategoryFilter implements PipeTransform {
     return items?.filter(it=>it.parentId === id);
   }
 }
+
+@Pipe({ name: 'permissionsFilter', pure: false })
+export class PermissionsFilter implements PipeTransform {
+  transform(items, id: number | any) {
+    return items?.filter(it=>it.parentId === id);
+  }
+}

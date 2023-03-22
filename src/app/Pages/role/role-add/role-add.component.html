@@ -1,0 +1,56 @@
+<div class="main-content">
+
+    <form [formGroup]="roleForm" (ngSubmit)="addRole()">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Role info</h5>
+                            <mat-form-field appearance="outline" class="w-100" style="margin-bottom: 20px;">
+                                <mat-label>Title</mat-label>
+                                <input type="text" matInput formControlName="title">
+                                <mat-error
+                                    *ngIf="roleForm.controls.title.errors?.required && roleForm.controls.title.touched">
+                                    please enter role name</mat-error>
+                                <mat-error
+                                    *ngIf="roleForm.controls.title.errors?.maxlength && roleForm.controls.title.touched">
+                                    role name can't be more than 200 characters</mat-error>
+                            </mat-form-field>
+                            <br>
+                            <br>
+                            <div class="form-group">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <button type="submit" class="btn btn-success m-r-5"
+                                        [disabled]="!roleForm.valid"><i class="anticon anticon-check-circle"></i>
+                                        Add role</button>
+                                    <button class="btn btn-danger m-r-5" routerLink="/role/list"><i
+                                            class="anticon anticon-close-circle"></i> Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Select permissions</h4>
+                            <div class="m-b-15 m-t-30">
+
+                                <div class="form-check form-check-flat form-check-primary m-b-15" *ngFor="let item of permissions | permissionsFilter: null">
+                                    <i class="anticon anticon-right m-r-5" style="vertical-align: 1px;font-size:13px"></i> <mat-checkbox style="margin-bottom: 10px;" color="primary" [value]="item.id.toString()" (change)="onPermissionChange($event)">{{item.name}}</mat-checkbox>
+                                    <div *ngFor="let sub of permissions | permissionsFilter: item.id" class="m-l-20">
+                                        <i class="anticon anticon-right m-r-5" style="vertical-align: 1px;font-size:13px"></i> <mat-checkbox color="primary" class="m-b-10" [value]="sub.id.toString()" (change)="onPermissionChange($event)">{{sub.name}}</mat-checkbox>
+                                        <div *ngFor="let secondSub of permissions | permissionsFilter: sub.id" class="m-l-20">
+                                            <i class="anticon anticon-right m-r-5" style="vertical-align: 1px;font-size:13px"></i> <mat-checkbox color="primary" class="m-b-10" [value]="secondSub.id.toString()" (change)="onPermissionChange($event)">{{secondSub.name}}</mat-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -62,7 +62,6 @@ export class UserAddComponent implements OnInit, AfterViewInit {
   addUser() {
     if (this.userForm.valid) {
       const user = new addUserDTO(this.userForm.controls.username.value, this.userForm.controls.mobile.value, this.userForm.controls.email.value, this.userForm.controls.password.value, this.userForm.controls.isActive.value, this.userForm.controls.imageAvatar.value.toString(), this.selectedRoles)
-      console.log(user)
       this.api.addUser(user).subscribe(res=> {
         if(res.status==="Success") {
           this.toastr.success('user successfully added', '');

@@ -31,7 +31,7 @@ import { NoLayoutComponent } from './Layout/no-layout/no-layout.component';
 import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 import { TestComponent } from './Pages/test/test.component';
 import { LoginComponent } from './Pages/login/login.component';
-import { SubCategoryFilter, UserRoleFilter } from './Utilities/Filters';
+import { PermissionsFilter, SubCategoryFilter, UserRoleFilter } from './Utilities/Filters';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -47,6 +47,12 @@ import { CategoryService } from './Services/Category/category.service';
 import { CategoryListComponent } from './Pages/category/category-list/category-list.component';
 import { CategoryAddComponent } from './Pages/category/category-add/category-add.component';
 import { HotToastModule } from '@ngneat/hot-toast';
+import { RoleListComponent } from './Pages/role/role-list/role-list.component';
+import { RoleService } from './Services/Role/role.service';
+import { RoleAddComponent } from './Pages/role/role-add/role-add.component';
+import { NgChartsModule } from 'ng2-charts';
+import { DatePipe } from '@angular/common';
+
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   'bgsColor': '#3e7dff',
@@ -83,6 +89,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   declarations: [
     UserRoleFilter,
     SubCategoryFilter,
+    PermissionsFilter,
     AppComponent,
     SidebarComponent,
     HeaderComponent,
@@ -101,7 +108,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ProductEditComponent,
     // category
     CategoryListComponent,
-    CategoryAddComponent
+    CategoryAddComponent,
+    RoleListComponent,
+    RoleAddComponent
   ],
   imports: [
     BrowserModule,
@@ -111,6 +120,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     FormsModule,
     CKEditorModule,
     ReactiveFormsModule,
+    NgChartsModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     // NgxUiLoaderRouterModule,
     // NgxUiLoaderHttpModule.forRoot({showForeground: true}),
@@ -134,7 +144,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AuthService,
     UserService,
     ProductService,
-    CategoryService
+    CategoryService,
+    RoleService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
